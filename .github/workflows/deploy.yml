@@ -21,7 +21,7 @@ jobs:
 
       - name: Deploy to Surge
           - name: Deploy to Surge
-      run: surge . Signal-kink-ykatie1.surge.sh --token ${{ secrets.SURGE_TOKEN }}
+      run: surge . Signal-54df4df54dfg4.surge.sh --token ${{ secrets.SURGE_TOKEN }}
       env:
         SURGE_LOGIN: tashtosha20@gmail.com
 
