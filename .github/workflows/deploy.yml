@@ -20,5 +20,5 @@ jobs:
         run: npm install -g surge
 
       - name: Deploy to Surge
-        run: surge . nora548548557.surge.sh --token ${{ secrets.SURGE_TOKEN }} 
+        run: surge . nora54558548557.surge.sh --token ${{ secrets.SURGE_TOKEN }} 
 
