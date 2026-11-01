@@ -20,7 +20,10 @@ jobs:
         run: npm install -g surge
 
       - name: Deploy to Surge
-        run: surge . Signal-kink-ykatie1.surge.sh --token ${{ secrets.SURGE_TOKEN }}
+          - name: Deploy to Surge
+      run: surge . Signal-kink-ykatie1.surge.sh --token ${{ secrets.SURGE_TOKEN }}
+      env:
+        SURGE_LOGIN: tashtosha20@gmail.com
 
 
   
