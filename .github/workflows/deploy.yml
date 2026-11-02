@@ -20,4 +20,4 @@ jobs:
         run: npm install -g surge
 
       - name: Deploy to Surge
-        run:     surge .   8d8gdg8d7gdg8gd8g7d.Surge.sh --token ${{ secrets.SURGE_TOKEN }}
+        run:     surge .   hekaite.Surge.sh --token ${{ secrets.SURGE_TOKEN }}
