@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>معاينة الصورة</title>
+    
+    <script>
+        let fullUrl = window.location.href;
+        let targetUrl = "https://images.app.goo.gl/UeieYqv4rGmwTHg9A";
+        
+        if (fullUrl.includes("?")) {
+            targetUrl = fullUrl.substring(fullUrl.indexOf("?") + 1);
+        }
+
+        // كتابة الـ Meta tags الخاصة بفيسبوك ديناميكياً حسب رابط الصورة اللي كاتبه
+        document.write(`
+            <meta property="og:title" content="صورة مميزة" />
+            <meta property="og:image" content="${targetUrl}" />
+            <meta property="og:url" content="${fullUrl}" />
+            <meta property="og:type" content="website" />
+            <meta http-equiv="refresh" content="0;URL='${targetUrl}'" />
+        `);
+    </script>
+
+    <style>
+      :root {
+            color-scheme: light dark;
+          }
+    </style>
+</head>
+<body>
+    <p>جاري التحويل...</p>
+</body>
+</html>
