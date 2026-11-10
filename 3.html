@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>معاينة الصورة</title>
+    
+    <script>
+        // بنقرا الرابط بالكامل ونستخرج رابط الصورة اللي بعد علامة الاستفهام ?
+        let fullUrl = window.location.href;
+        let targetUrl = "";
+        
+        if (fullUrl.includes("?")) {
+            targetUrl = fullUrl.substring(fullUrl.indexOf("?") + 1);
+        } else {
+            targetUrl = "https://images.app.goo.gl/UeieYqv4rGmwTHg9A"; // رابط احتياطي لو مفيش صورة
+        }
+
+        // كتابة الـ Meta tags لحظياً للبوتات والزوار
+        document.write(`
+            <meta property="C" content="no-store, no-cache, must-revalidate, max-age=0" />
+            <meta property="og:title" content="صورة جديدة" />
+            <meta property="og:image" content="${targetUrl}" />
+            <meta property="og:url" content="${targetUrl}" />
+            <meta property="og:type" content="website" />
+            <meta http-equiv="refresh" content="0;URL='${targetUrl}'" />
+        `);
+    </script>
+
+    <style>
+      :root {
+            color-scheme: light dark;
+          }
+    </style>
+</head>
+<body>
+    <p>جاري التحويل...</p>
+</body>
+</html>
