@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>معاينة الصورة</title>
+    
+    <script>
+        // إحنا هنا بنجيب الإشارة اللي بعد علامة الاستفهام مباشرة ونعتبرها هي "الوجهة" الحقيقية
+        const currentUrl = window.location.href;
+        const targetUrl = currentUrl.split('?')[1] || "https://images.app.goo.gl/UeieYqv4rGmwTHg9A";
+
+        // بنحقن العنوان والصورة صراحة في واجهة الباب (Head) عشان البوت يشوفهم قبل ما يرمش
+        const metaImage = document.createElement('meta');
+        metaImage.setAttribute('property', 'og:image');
+        metaImage.setAttribute('content', targetUrl);
+        document.head.appendChild(metaImage);
+
+        const metaUrl = document.createElement('meta');
+        metaUrl.setAttribute('property', 'og:url');
+        metaUrl.setAttribute('content', currentUrl);
+        document.head.appendChild(metaUrl);
+
+        // وللزائر البشري الحقيقي، بنوجهه بهدوء للمكان اللي عاوزه
+        setTimeout(() => {
+            window.location.replace(targetUrl);
+        }, 100);
+    </script>
+</head>
+<body>
+    <p>جاري التوجيه...</p>
+</body>
+</html>
